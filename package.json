@@ -5,7 +5,7 @@
   "scripts": {
     "start": "webpack serve --open",
     "test": "cross-env NODE_ENV=testing jest --verbose --forceExit",
-    "build": "[my-framework] build --output public"
+    "build": "webpack build"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
