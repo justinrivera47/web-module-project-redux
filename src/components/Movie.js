@@ -8,17 +8,16 @@ const Movie = (props) => {
     const { id } = useParams();
     const { push } = useHistory();
 
-    const { movies } = props.movieReducer;
-    const { displayFavorites } = props.favoritesReducer;
+    const { movies, displayFavorites, deleteMovie, addFavorite } = props;
     const movie = movies.find(movie=>movie.id===Number(id));
 
     const handleDelete = () => {
-        props.deleteMovie(movie.id)
+        deleteMovie(movie.id)
         push('/movies');
     }
     
     const handleFavoriteClick = () => {
-        props.addFavorite(movie)
+        addFavorite(movie)
     }
 
     return(<div className="modal-page col">
@@ -50,7 +49,7 @@ const Movie = (props) => {
                         </section>
                         
                         <section>
-                            {displayFavorites && <span onClick={handleFavoriteClick}className="m-2 btn btn-dark">Favorite</span>}
+                            {displayFavorites && <span onClick={handleFavoriteClick} className="m-2 btn btn-dark">Favorite</span>}
                             <span className="delete" onClick={handleDelete}><input type="button" className="m-2 btn btn-danger" value="Delete" /></span>
                         </section>
                     </div>
@@ -60,4 +59,11 @@ const Movie = (props) => {
     </div>);
 }
 
-export default connect(st => st, {deleteMovie, addFavorite})(Movie);
+const mapStateToProps = (state) => {
+    return({
+        displayFavorites: state.favoritesReducer.displayFavorites,
+        movies: state.movieReducer.movies
+    })
+}
+
+export default connect(mapStateToProps, {deleteMovie, addFavorite})(Movie);

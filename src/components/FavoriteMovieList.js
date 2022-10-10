@@ -6,7 +6,7 @@ import { removeFavorite } from './../actions/favoritesActions'
 
 
 const FavoriteMovieList = (props) => {
-    const { favorites } = props.favoritesReducer;
+    const { favorites } = props;
     
     const handleDeleteFavorite = (id) => {
         props.removeFavorite(id)
@@ -27,5 +27,9 @@ const FavoriteMovieList = (props) => {
     </div>);
 }
 
-
-export default connect(st => st, {addFavorite, removeFavorite})(FavoriteMovieList);
+const mapStateToProps = (state) => {
+    return {
+        favorites: state.favoritesReducer.favorites
+    }
+}
+export default connect(mapStateToProps, {addFavorite, removeFavorite})(FavoriteMovieList);

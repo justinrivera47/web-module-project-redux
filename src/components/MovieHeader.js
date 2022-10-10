@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { toggleFavorites } from './../actions/favoritesActions'
 
 const MovieHeader = (props) => {
-    const { appTitle } = props.movieReducer;
-    const { displayFavorites } = props.favoritesReducer;
+    const { appTitle, displayFavorites, toggleFavorites } = props;
 
     const handleClick = () => {
-        props.toggleFavorites();
+        toggleFavorites();
     }
     
     return(<div className="table-title">
@@ -25,4 +24,11 @@ const MovieHeader = (props) => {
     </div>);
 }
 
-export default connect(st => st, { toggleFavorites })(MovieHeader);
+const mapStateToProps = (state) => {
+    return({
+        displayFavorites: state.favoritesReducer.displayFavorites,
+        appTitle: state.movieReducer.appTitle
+    })
+}
+
+export default connect(mapStateToProps, { toggleFavorites })(MovieHeader);
